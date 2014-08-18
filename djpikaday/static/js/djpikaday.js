@@ -26,9 +26,9 @@
         {
             var picker = new Pikaday({
                 field: inp,
-                format: 'DD/MM/YYYY',
+                format: inp.dataset["momentFormat"],
                 onSelect: function(){
-                    inp.value = picker.toString();
+                    this._o.field.value = picker.toString();
                 },
                 i18n: {
                     previousMonth : gettext('Previous Month'),
