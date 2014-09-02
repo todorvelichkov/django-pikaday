@@ -51,3 +51,11 @@ Add :code:`djpikaday` to the :code:`INSTALLED_APPS` setting.
        widgets = {
            'my_date_field': PikadayInput(format='%Y-%m-%d'),
        }
+
+**Using a frontend build system**
+
+Add the following setting to `settings.py`:
+
+  .. code:: python
+
+    AUTO_RENDER_DJPIKADAY_STATICS = False

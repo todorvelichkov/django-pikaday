@@ -10,7 +10,8 @@ from django.utils.formats import get_format
 
 
 DJPIKADAY = getattr(settings, 'DJPIKADAY', {})
-DJPIKADAY_LOAD_JSI18N = DJPIKADAY.get('LOAD_JSI18N', True)
+DJPIKADAY_LOAD_JSI18N = getattr(settings, 'DJPIKADAY_LOAD_JSI18N', True)
+DJPIKADAY_LOAD_STATICS = getattr(settings, 'AUTO_RENDER_DJPIKADAY_STATICS', True)
 DJPIKADAY_DATE_INPUT_FORMAT = DJPIKADAY.get('DATE_INPUT_FORMAT')
 
 
@@ -54,7 +55,9 @@ class PikadayInput(DateInput):
         # pikaday
         js.append('pikaday/pikaday.js')
         js.append('js/djpikaday.js')
-
+        
+        if not DJPIKADAY_LOAD_STATICS:
+            return Media(css={}, js=[])
         return Media(css=css, js=js)
 
     media = property(_media)
