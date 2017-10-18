@@ -18,15 +18,26 @@
         }
     }
 
+    var config = ['position', 'reposition', 'defaultDate', 'firstDay', 'formatStrict',
+        'minDate', 'maxDate', 'yearRange', 'showWeekNumber', 'minYear', 'maxYear',
+        'minMonth', 'maxMonth', 'startRange', 'endRange', 'isRTL', 'yearSuffix',
+        'showMonthAfterYear', 'showDaysInNextAndPreviousMonths', 'numberOfMonths',
+        'mainCalendar', 'theme'
+    ];
+
+    var parse_to_date = ['defaultDate', 'minDate', 'maxDate'];
+
     function load_djpikaday()
     {
         var inputs = document.querySelectorAll('[data-pikaday="true"]');
 
         for (var i = 0; i < inputs.length, inp = inputs[i]; ++i)
         {
-            var picker = new Pikaday({
+            var options = {
                 field: inp,
                 format: inp.dataset["momentFormat"],
+                additionalFormats: inp.dataset["extraFormats"] ? inp.dataset["extraFormats"].split(';') : [],
+                formatStrict: true,
                 i18n: {
                     previousMonth : gettext('Previous Month'),
                     nextMonth     : gettext('Next Month'),
@@ -63,7 +74,18 @@
                         gettext('Sat')
                     ]
                 }
-            });
+            };
+            for (var key in inp.dataset) {
+                if (config.indexOf(key) >= 0) {
+                    if (parse_to_date.indexOf(key) >= 0) {
+                        options[key] = new Date(inp.dataset[key]);
+                    } else {
+                        options[key] = inp.dataset[key];
+                    }
+                }
+            };
+            var picker = new Pikaday(options);
+            inp.picker = picker;
         }
     }
 }();
