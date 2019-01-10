@@ -62,12 +62,12 @@ class PikadayInput(DateInput):
 
     media = property(_media)
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
         attrs = attrs or {}
         attrs['data-pikaday'] = 'true'
         attrs['data-moment-format'] = self.get_moment_format()
 
-        return super(PikadayInput, self).render(name, value, attrs)
+        return super(PikadayInput, self).render(name, value, attrs, renderer)
 
     def get_format(self):
         return DJPIKADAY_DATE_INPUT_FORMAT or self.format
