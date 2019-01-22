@@ -2,7 +2,7 @@ import os.path
 import glob
 
 from django.forms import Media, DateInput
-from django.core.urlresolvers import reverse, NoReverseMatch
+from django.urls import reverse, NoReverseMatch
 from django.conf import settings
 
 from django.utils.translation import get_language
@@ -62,12 +62,12 @@ class PikadayInput(DateInput):
 
     media = property(_media)
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
         attrs = attrs or {}
         attrs['data-pikaday'] = 'true'
         attrs['data-moment-format'] = self.get_moment_format()
 
-        return super(PikadayInput, self).render(name, value, attrs)
+        return super(PikadayInput, self).render(name, value, attrs, renderer)
 
     def get_format(self):
         return DJPIKADAY_DATE_INPUT_FORMAT or self.format
